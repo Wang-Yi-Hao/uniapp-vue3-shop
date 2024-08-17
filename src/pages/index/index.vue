@@ -7,7 +7,6 @@ import type { BannerItem, CategoryItem, HotItem } from '@/types/Home'
 import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import type { ShopGuessInstance } from '@/types/component'
-import PageSkeleton from './components/PageSkeleton.vue'
 
 const bannerList = ref<BannerItem[]>([])
 const getHomeBannerData = async () => {
@@ -21,7 +20,7 @@ const getHomeCategoryData = async () => {
   categoryList.value = res.result
 }
 const homeHotList = ref<HotItem[]>([])
-const getHomeHotData = async () => {
+const homeHotData = async () => {
   const res = await getHomeHotAPI()
   homeHotList.value = res.result
 }
@@ -30,45 +29,20 @@ const guessRef = ref<ShopGuessInstance>()
 const onScrolltolower = () => {
   guessRef.value?.getHomeGoodsGuessLikeData()
 }
-
-const isTriggered = ref(false)
-const onRefresherrefresh = async () => {
-  isTriggered.value = true
-  guessRef.value?.resetData()
-  await Promise.all([
-    getHomeBannerData(),
-    getHomeCategoryData(),
-    getHomeHotData(),
-    guessRef.value?.getHomeGoodsGuessLikeData(),
-  ])
-  isTriggered.value = false
-}
-
-const isSkeleton = ref(false)
-onLoad(async () => {
-  isSkeleton.value = true
-  Promise.all([getHomeBannerData(), getHomeCategoryData(), getHomeHotData()])
-  isSkeleton.value = false
+onLoad(() => {
+  getHomeBannerData()
+  getHomeCategoryData()
+  homeHotData()
 })
 </script>
 
 <template>
   <CustomNavbar />
-  <scroll-view
-    scroll-y
-    class="scroll-view"
-    @scrolltolower="onScrolltolower"
-    refresher-enabled
-    @refresherrefresh="onRefresherrefresh"
-    :refresher-triggered="isTriggered"
-  >
-    <PageSkeleton v-if="isSkeleton" />
-    <template v-else>
-      <ShopSwiper :list="bannerList" />
-      <CategoryPanel :list="categoryList" />
-      <HotPanel :list="homeHotList" />
-      <ShopGuess ref="guessRef" />
-    </template>
+  <scroll-view scroll-y class="scroll-view" @scrolltolower="onScrolltolower">
+    <ShopSwiper :list="bannerList" />
+    <CategoryPanel :list="categoryList" />
+    <HotPanel :list="homeHotList" />
+    <ShopGuess ref="guessRef" />
   </scroll-view>
 </template>
 
