@@ -46,6 +46,13 @@
 			"style": {
 				"navigationBarTitleText": "热门推荐"
 			}
+		},
+		{
+			"path" : "pages/goods/goods",
+			"style" : 
+			{
+				"navigationBarTitleText" : "商品详情"
+			}
 		}
 	],
 	"globalStyle": {
@@ -86,5 +93,5 @@
 				"selectedIconPath": "static/tabs/user_selected.png"
 			}
 		]
-	},
+	}
 }
