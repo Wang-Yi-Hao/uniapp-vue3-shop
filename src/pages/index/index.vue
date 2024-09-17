@@ -7,6 +7,7 @@ import type { BannerItem, CategoryItem, HotItem } from '@/types/Home'
 import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
 import type { ShopGuessInstance } from '@/types/component'
+import { useGuessList } from '@/composables'
 
 const bannerList = ref<BannerItem[]>([])
 const getHomeBannerData = async () => {
@@ -25,10 +26,12 @@ const homeHotData = async () => {
   homeHotList.value = res.result
 }
 
-const guessRef = ref<ShopGuessInstance>()
-const onScrolltolower = () => {
-  guessRef.value?.getHomeGoodsGuessLikeData()
-}
+// const guessRef = ref<ShopGuessInstance>()
+// const onScrolltolower = () => {
+//   guessRef.value?.getHomeGoodsGuessLikeData()
+// }
+
+const { guessRef, onScrolltolower } = useGuessList()
 onLoad(() => {
   getHomeBannerData()
   getHomeCategoryData()
