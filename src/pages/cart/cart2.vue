@@ -3,5 +3,7 @@ import CartMain from './components/cartMain.vue'
 </script>
 
 <template>
-  <CartMain />
+  <view>
+    <CartMain />
+  </view>
 </template>

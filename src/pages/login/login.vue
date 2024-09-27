@@ -26,7 +26,8 @@ const onGetPhoneNumberSimple = async () => {
 const loginSuccess = (profile: LoginResult) => {
   const memberStore = useMemberStore()
   memberStore.setProfile(profile)
-  uni.switchTab({ url: '/pages/my/my' })
+  // uni.switchTab({ url: '/pages/my/my' })
+  uni.navigateBack()
   uni.showToast({ icon: 'none', title: '登录成功' })
 }
 </script>
